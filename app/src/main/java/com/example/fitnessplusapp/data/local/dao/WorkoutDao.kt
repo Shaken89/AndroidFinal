@@ -1,4 +1,24 @@
 package com.example.fitnessplusapp.data.local.dao
 
-class WorkoutDao {
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
+
+@Dao
+interface WorkoutDao {
+
+    @Query("SELECT * FROM workouts ORDER BY date DESC")
+    fun getAllWorkouts(): LiveData<List<WorkoutEntity>>
+
+    @Query("SELECT * FROM workouts WHERE category = :category ORDER BY date DESC")
+    fun getWorkoutsByCategory(category: String): LiveData<List<WorkoutEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWorkout(workout: WorkoutEntity)
+
+    @Delete
+    suspend fun deleteWorkout(workout: WorkoutEntity)
+
+    @Query("DELETE FROM workouts")
+    suspend fun deleteAllWorkouts()
 }
