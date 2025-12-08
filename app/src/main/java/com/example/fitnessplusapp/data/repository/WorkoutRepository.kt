@@ -1,8 +1,8 @@
 package com.example.fitnessplusapp.data.repository
 
 import androidx.lifecycle.LiveData
-import com.yourpackage.fitnessplus.data.local.dao.WorkoutDao
-import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
+import com.example.fitnessplusapp.data.local.dao.WorkoutDao
+import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 
 class WorkoutRepository(private val workoutDao: WorkoutDao) {
 

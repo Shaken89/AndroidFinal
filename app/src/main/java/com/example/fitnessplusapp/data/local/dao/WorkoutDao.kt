@@ -2,7 +2,7 @@ package com.example.fitnessplusapp.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
+import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 
 @Dao
 interface WorkoutDao {

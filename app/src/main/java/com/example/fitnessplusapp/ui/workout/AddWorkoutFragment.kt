@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
-import com.yourpackage.fitnessplus.R
-import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
-import com.yourpackage.fitnessplus.ui.viewmodel.WorkoutViewModel
+import com.example.fitnessplusapp.R
+import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
+import com.example.fitnessplusapp.ui.viewmodel.WorkoutViewModel
 
 class AddWorkoutFragment : Fragment() {
 

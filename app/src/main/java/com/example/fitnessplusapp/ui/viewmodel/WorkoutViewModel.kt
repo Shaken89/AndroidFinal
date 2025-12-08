@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.yourpackage.fitnessplus.data.local.WorkoutDatabase
-import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
-import com.yourpackage.fitnessplus.data.repository.WorkoutRepository
+import com.example.fitnessplusapp.data.local.WorkoutDatabase
+import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
+import com.example.fitnessplusapp.data.repository.WorkoutRepository
 import kotlinx.coroutines.launch
 
 class WorkoutViewModel(application: Application) : AndroidViewModel(application) {

@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.yourpackage.fitnessplus.R
-import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
+import com.example.fitnessplusapp.R
+import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 
 class WorkoutAdapter(
     private var workouts: List<WorkoutEntity>,

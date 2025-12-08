@@ -9,9 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.yourpackage.fitnessplus.R
-import com.yourpackage.fitnessplus.ui.viewmodel.WorkoutViewModel
-import com.yourpackage.fitnessplus.ui.workout.adapter.WorkoutAdapter
+import com.example.fitnessplusapp.R
+import com.example.fitnessplusapp.ui.viewmodel.WorkoutViewModel
+import com.example.fitnessplusapp.ui.workout.adapter.WorkoutAdapter
 
 class WorkoutListFragment : Fragment() {
 

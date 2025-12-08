@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.yourpackage.fitnessplus.data.local.dao.WorkoutDao
-import com.yourpackage.fitnessplus.data.local.entity.WorkoutEntity
+import com.example.fitnessplusapp.data.local.dao.WorkoutDao
+import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 
 @Database(entities = [WorkoutEntity::class], version = 1, exportSchema = false)
 abstract class WorkoutDatabase : RoomDatabase() {
