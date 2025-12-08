@@ -3,11 +3,9 @@ package com.example.fitnessplusapp.ui.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
 import com.example.fitnessplusapp.data.local.WorkoutDatabase
 import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 import com.example.fitnessplusapp.data.repository.WorkoutRepository
-import kotlinx.coroutines.launch
 
 class WorkoutViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -20,11 +18,11 @@ class WorkoutViewModel(application: Application) : AndroidViewModel(application)
         allWorkouts = repository.allWorkouts
     }
 
-    fun insert(workout: WorkoutEntity) = viewModelScope.launch {
+    fun insert(workout: WorkoutEntity) {
         repository.insert(workout)
     }
 
-    fun delete(workout: WorkoutEntity) = viewModelScope.launch {
+    fun delete(workout: WorkoutEntity) {
         repository.delete(workout)
     }
 

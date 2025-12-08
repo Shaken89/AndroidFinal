@@ -14,11 +14,11 @@ interface WorkoutDao {
     fun getWorkoutsByCategory(category: String): LiveData<List<WorkoutEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWorkout(workout: WorkoutEntity)
+    fun insertWorkout(workout: WorkoutEntity)
 
     @Delete
-    suspend fun deleteWorkout(workout: WorkoutEntity)
+    fun deleteWorkout(workout: WorkoutEntity)
 
     @Query("DELETE FROM workouts")
-    suspend fun deleteAllWorkouts()
+    fun deleteAllWorkouts()
 }

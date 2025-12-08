@@ -44,7 +44,6 @@ class WorkoutListFragment : Fragment() {
         }
 
         view.findViewById<FloatingActionButton>(R.id.fabAddWorkout).setOnClickListener {
-            // Навигация к AddWorkoutFragment
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, AddWorkoutFragment())
                 .addToBackStack(null)

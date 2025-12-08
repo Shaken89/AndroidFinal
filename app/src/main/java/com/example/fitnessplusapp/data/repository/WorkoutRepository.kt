@@ -3,17 +3,23 @@ package com.example.fitnessplusapp.data.repository
 import androidx.lifecycle.LiveData
 import com.example.fitnessplusapp.data.local.dao.WorkoutDao
 import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
+import java.util.concurrent.Executors
 
 class WorkoutRepository(private val workoutDao: WorkoutDao) {
 
+    private val executor = Executors.newSingleThreadExecutor()
     val allWorkouts: LiveData<List<WorkoutEntity>> = workoutDao.getAllWorkouts()
 
-    suspend fun insert(workout: WorkoutEntity) {
-        workoutDao.insertWorkout(workout)
+    fun insert(workout: WorkoutEntity) {
+        executor.execute {
+            workoutDao.insertWorkout(workout)
+        }
     }
 
-    suspend fun delete(workout: WorkoutEntity) {
-        workoutDao.deleteWorkout(workout)
+    fun delete(workout: WorkoutEntity) {
+        executor.execute {
+            workoutDao.deleteWorkout(workout)
+        }
     }
 
     fun getWorkoutsByCategory(category: String): LiveData<List<WorkoutEntity>> {
