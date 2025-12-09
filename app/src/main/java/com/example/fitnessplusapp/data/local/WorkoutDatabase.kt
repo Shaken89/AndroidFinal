@@ -1,3 +1,4 @@
+// File: app/src/main/java/com/example/fitnessplusapp/data/local/WorkoutDatabase.kt
 package com.example.fitnessplusapp.data.local
 
 import android.content.Context
@@ -7,10 +8,13 @@ import androidx.room.RoomDatabase
 import com.example.fitnessplusapp.data.local.dao.WorkoutDao
 import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 
+// Убираем UserEntity из списка entities
 @Database(entities = [WorkoutEntity::class], version = 1, exportSchema = false)
 abstract class WorkoutDatabase : RoomDatabase() {
 
     abstract fun workoutDao(): WorkoutDao
+
+    // Убираем abstract fun userDao()
 
     companion object {
         @Volatile

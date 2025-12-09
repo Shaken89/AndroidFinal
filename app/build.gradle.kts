@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
+    id("kotlin-kapt") // <-- ДОБАВЬТЕ ЭТУ СТРОКУ
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -36,6 +37,10 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    // <-- ВАЖНО: ВКЛЮЧАЕМ VIEW BINDING -->
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -47,11 +52,14 @@ dependencies {
 
     // Material
     implementation("com.google.android.material:material:1.9.0")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Lifecycle
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    val lifecycleVersion = "2.8.1" // Используем val вместо def
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
     // Room
     implementation("androidx.room:room-runtime:2.5.2")
@@ -69,4 +77,25 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
+
+    //Retrofit independencies
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    //Logging
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+    //Datastore
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
+
+    implementation("com.google.dagger:hilt-android:2.48") // <-- ДОБАВЬТЕ ЭТУ СТРОКУ
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0") // <-- ДОБАВЬТЕ ЭТУ СТРОКУ
+
+    implementation("dagger.hilt:hilt-android-components:1.1.0") // Или новее
+
 }
