@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/workoutListFragment">
+
+    <fragment
+        android:id="@+id/workoutListFragment"
+        android:name="com.example.fitnessplusapp.ui.workout.WorkoutListFragment"
+        android:label="Workouts"
+        tools:layout="@layout/fragment_workout_list">
+
+        <action
+            android:id="@+id/action_workoutListFragment_to_addWorkoutFragment"
+            app:destination="@id/addWorkoutFragment" />
+
+        <action
+            android:id="@+id/action_workoutListFragment_to_nutritionListFragment"
+            app:destination="@id/nutritionListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addWorkoutFragment"
+        android:name="com.example.fitnessplusapp.ui.workout.AddWorkoutFragment"
+        android:label="Add Workout"
+        tools:layout="@layout/fragment_add_workout" />
+
+    <fragment
+        android:id="@+id/nutritionListFragment"
+        android:name="com.example.fitnessplusapp.ui.nutrition.NutritionListFragment"
+        android:label="Nutrition"
+        tools:layout="@layout/fragment_nutrition_list">
+
+        <action
+            android:id="@+id/action_nutritionListFragment_to_addFoodFragment"
+            app:destination="@id/addFoodFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFoodFragment"
+        android:name="com.example.fitnessplusapp.ui.nutrition.AddFoodFragment"
+        android:label="Add Food"
+        tools:layout="@layout/fragment_add_food" />
+
+</navigation>

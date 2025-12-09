@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FitnessPlusApp</string>
+
+    <string name="food_name_hint">Food name</string>
+    <string name="calories_hint">Calories</string>
+    <string name="meal_type_label">Meal type</string>
+    <string name="save">Save</string>
+    <string name="today">Today</string>
+    <string name="goal_template">Goal: 2000 kcal</string>
+
+
+    <string-array name="meal_types">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+    </string-array>
+
+</resources>
