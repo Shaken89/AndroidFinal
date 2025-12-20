@@ -40,6 +40,62 @@
         android:id="@+id/profileFragment"
         android:name="com.example.fitnessplusapp.ui.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        
+        <action
+            android:id="@+id/action_profileFragment_to_workoutListFragment"
+            app:destination="@id/workoutListFragment" />
+        
+        <action
+            android:id="@+id/action_profileFragment_to_nutritionListFragment"
+            app:destination="@id/nutritionListFragment" />
+        
+        <action
+            android:id="@+id/action_profileFragment_to_progressFragment"
+            app:destination="@id/progressFragment" />
+    </fragment>
+
+    <!-- Workout Module -->
+    <fragment
+        android:id="@+id/workoutListFragment"
+        android:name="com.example.fitnessplusapp.ui.workout.WorkoutListFragment"
+        android:label="Workouts"
+        tools:layout="@layout/fragment_workout_list">
+        
+        <action
+            android:id="@+id/action_workoutListFragment_to_addWorkoutFragment"
+            app:destination="@id/addWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addWorkoutFragment"
+        android:name="com.example.fitnessplusapp.ui.workout.AddWorkoutFragment"
+        android:label="Add Workout"
+        tools:layout="@layout/fragment_add_workout" />
+
+    <!-- Nutrition Module -->
+    <fragment
+        android:id="@+id/nutritionListFragment"
+        android:name="com.example.fitnessplusapp.ui.nutrition.NutritionListFragment"
+        android:label="Nutrition"
+        tools:layout="@layout/fragment_nutrition_list">
+        
+        <action
+            android:id="@+id/action_nutritionListFragment_to_addFoodFragment"
+            app:destination="@id/addFoodFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addFoodFragment"
+        android:name="com.example.fitnessplusapp.ui.nutrition.AddFoodFragment"
+        android:label="Add Food"
+        tools:layout="@layout/fragment_add_food" />
+
+    <!-- Progress & Charts Module -->
+    <fragment
+        android:id="@+id/progressFragment"
+        android:name="com.example.fitnessplusapp.ui.progress.ProgressFragment"
+        android:label="Progress"
+        tools:layout="@layout/fragment_progress" />
 
 </navigation>
