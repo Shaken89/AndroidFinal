@@ -5,11 +5,18 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "workouts")
 data class WorkoutEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val category: String,
-    val duration: Int,
+    val duration: Int, // в минутах
     val caloriesBurned: Int,
-    val date: Long = System.currentTimeMillis()
+    val date: Long = System.currentTimeMillis(),
+    
+    // Новые поля для Final
+    val notes: String = "", // заметки о тренировке
+    val intensity: String = "Medium", // Low, Medium, High
+    val sets: Int = 0, // количество подходов
+    val reps: Int = 0, // количество повторений
+    val imageUri: String? = null, // путь к фото тренировки
+    val completed: Boolean = true // выполнена ли тренировка
 )

@@ -9,15 +9,17 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.google.android.material.textfield.TextInputEditText
 import com.example.fitnessplusapp.R
 import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 import com.example.fitnessplusapp.ui.viewmodel.WorkoutViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddWorkoutFragment : Fragment() {
 
-    private lateinit var viewModel: WorkoutViewModel
+    private val viewModel: WorkoutViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,15 +32,12 @@ class AddWorkoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[WorkoutViewModel::class.java]
-
         val etName = view.findViewById<TextInputEditText>(R.id.etWorkoutName)
         val spinnerCategory = view.findViewById<Spinner>(R.id.spinnerCategory)
         val etDuration = view.findViewById<TextInputEditText>(R.id.etDuration)
         val etCalories = view.findViewById<TextInputEditText>(R.id.etCalories)
         val btnSave = view.findViewById<Button>(R.id.btnSaveWorkout)
 
-        // Настройка Spinner
         val categories = arrayOf("Cardio", "Strength", "Flexibility", "Sports")
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -51,7 +50,7 @@ class AddWorkoutFragment : Fragment() {
             val calories = etCalories.text.toString().toIntOrNull() ?: 0
 
             if (name.isBlank() || duration == 0) {
-                Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please fill required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

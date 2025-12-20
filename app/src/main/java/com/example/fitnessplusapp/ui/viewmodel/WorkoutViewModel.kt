@@ -1,29 +1,31 @@
 package com.example.fitnessplusapp.ui.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.fitnessplusapp.data.local.WorkoutDatabase
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
 import com.example.fitnessplusapp.data.repository.WorkoutRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WorkoutViewModel(application: Application) : AndroidViewModel(application) {
-
+@HiltViewModel
+class WorkoutViewModel @Inject constructor(
     private val repository: WorkoutRepository
-    val allWorkouts: LiveData<List<WorkoutEntity>>
+) : ViewModel() {
 
-    init {
-        val workoutDao = WorkoutDatabase.getDatabase(application).workoutDao()
-        repository = WorkoutRepository(workoutDao)
-        allWorkouts = repository.allWorkouts
-    }
+    val allWorkouts: LiveData<List<WorkoutEntity>> = repository.allWorkouts
 
     fun insert(workout: WorkoutEntity) {
-        repository.insert(workout)
+        viewModelScope.launch {
+            repository.insert(workout)
+        }
     }
 
     fun delete(workout: WorkoutEntity) {
-        repository.delete(workout)
+        viewModelScope.launch {
+            repository.delete(workout)
+        }
     }
 
     fun getWorkoutsByCategory(category: String): LiveData<List<WorkoutEntity>> {

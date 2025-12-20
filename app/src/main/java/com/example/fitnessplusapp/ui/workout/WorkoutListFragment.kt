@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.example.fitnessplusapp.R
 import com.example.fitnessplusapp.ui.viewmodel.WorkoutViewModel
 import com.example.fitnessplusapp.ui.workout.adapter.WorkoutAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WorkoutListFragment : Fragment() {
 
-    private lateinit var viewModel: WorkoutViewModel
+    private val viewModel: WorkoutViewModel by viewModels()
     private lateinit var adapter: WorkoutAdapter
 
     override fun onCreateView(
@@ -28,8 +30,6 @@ class WorkoutListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this)[WorkoutViewModel::class.java]
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewWorkouts)
         adapter = WorkoutAdapter(emptyList()) { workout ->

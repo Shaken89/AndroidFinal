@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessplusapp.R
 import com.example.fitnessplusapp.data.local.entity.WorkoutEntity
@@ -43,7 +44,28 @@ class WorkoutAdapter(
     override fun getItemCount() = workouts.size
 
     fun updateData(newWorkouts: List<WorkoutEntity>) {
+        val diffCallback = WorkoutDiffCallback(workouts, newWorkouts)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        
         workouts = newWorkouts
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+    }
+    
+    private class WorkoutDiffCallback(
+        private val oldList: List<WorkoutEntity>,
+        private val newList: List<WorkoutEntity>
+    ) : DiffUtil.Callback() {
+        
+        override fun getOldListSize() = oldList.size
+        
+        override fun getNewListSize() = newList.size
+        
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+        
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }
