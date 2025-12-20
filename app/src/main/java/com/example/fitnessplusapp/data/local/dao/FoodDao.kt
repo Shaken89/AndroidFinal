@@ -15,12 +15,12 @@ interface FoodDao {
     fun getAllFood(): LiveData<List<FoodEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFood(food: FoodEntity)
+    suspend fun insertFood(food: FoodEntity)
 
     @Delete
-    fun deleteFood(food: FoodEntity)
+    suspend fun deleteFood(food: FoodEntity)
 
     @Query("DELETE FROM food_items")
-    fun deleteAllFood()
+    suspend fun deleteAllFood()
 }
 

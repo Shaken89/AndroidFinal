@@ -6,27 +6,20 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessplusapp.R
-import com.example.fitnessplusapp.data.local.NutritionDatabase
-import com.example.fitnessplusapp.data.repository.NutritionRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
+@AndroidEntryPoint
 class NutritionListFragment : Fragment(R.layout.fragment_nutrition_list) {
 
     private lateinit var adapter: FoodAdapter
 
-    private val viewModel: NutritionViewModel by viewModels {
-        val db = NutritionDatabase.getDatabase(requireContext())
-        val repo = NutritionRepository(db.foodDao())
-        NutritionViewModelFactory(repo)
-    }
+    private val viewModel: NutritionViewModel by viewModels()
 
     private val dailyGoal = 2000
 
@@ -54,19 +47,13 @@ class NutritionListFragment : Fragment(R.layout.fragment_nutrition_list) {
             findNavController().navigate(R.id.action_nutritionListFragment_to_addFoodFragment)
         }
 
+        viewModel.foodList.observe(viewLifecycleOwner) { list ->
+            val todayList = list.filter { isToday(it.date) }
+            adapter.submitList(todayList)
 
-
-        viewLifecycleOwner.lifecycleScope.launch {
-
-            viewModel.foodList.observe(viewLifecycleOwner) { list ->
-                val todayList = list.filter { isToday(it.date) }
-                adapter.submitList(todayList)
-
-                val total = todayList.sumOf { it.calories }
-                tvTodayCalories.text = "$total kcal"
-                progressBar.progress = total.coerceAtMost(dailyGoal)
-            }
-
+            val total = todayList.sumOf { it.calories }
+            tvTodayCalories.text = "$total kcal"
+            progressBar.progress = total.coerceAtMost(dailyGoal)
         }
     }
 

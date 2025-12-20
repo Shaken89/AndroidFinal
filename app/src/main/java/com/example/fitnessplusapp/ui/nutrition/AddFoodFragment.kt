@@ -10,16 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fitnessplusapp.R
-import com.example.fitnessplusapp.data.local.NutritionDatabase
-import com.example.fitnessplusapp.data.repository.NutritionRepository
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddFoodFragment : Fragment(R.layout.fragment_add_food) {
 
-    private val viewModel: NutritionViewModel by viewModels {
-        val db = NutritionDatabase.getDatabase(requireContext())
-        val repo = NutritionRepository(db.foodDao())
-        NutritionViewModelFactory(repo)
-    }
+    private val viewModel: NutritionViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
