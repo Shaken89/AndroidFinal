@@ -10,6 +10,7 @@ import javax.inject.Singleton
 class WorkoutRepository @Inject constructor(
     private val workoutDao: WorkoutDao
 ) {
+    // получаем все тренировки из БД
     val allWorkouts: LiveData<List<WorkoutEntity>> = workoutDao.getAllWorkouts()
 
     suspend fun insert(workout: WorkoutEntity) {

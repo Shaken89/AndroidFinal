@@ -1,4 +1,3 @@
-// File: app/src/main/java/com/example/fitnessplusapp/data/repository/UserRepository.kt
 package com.example.fitnessplusapp.data.repository
 
 import com.example.fitnessplusapp.data.local.dao.UserDao

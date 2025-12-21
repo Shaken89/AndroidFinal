@@ -1,4 +1,3 @@
-// File: app/src/main/java/com/example/fitnessplusapp/ui/auth/RegisterFragment.kt
 package com.example.fitnessplusapp.ui.auth
 
 import android.os.Bundle
@@ -18,7 +17,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    // Мы используем тот же AuthViewModel, что и для входа
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,14 +48,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             when (state) {
                 is AuthState.Success -> {
                     Toast.makeText(requireContext(), "Регистрация успешна!", Toast.LENGTH_SHORT).show()
-                    // После успешной регистрации переходим на экран профиля
-                    // Убедитесь, что такой action есть в nav_graph.xml
+                    // переход на профиль после регистрации
                     findNavController().navigate(R.id.action_registerFragment_to_profileFragment)
                 }
                 is AuthState.Error -> {
                     Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
                 }
-                else -> { /* Do nothing */ }
+                else -> {}
             }
         }
     }
