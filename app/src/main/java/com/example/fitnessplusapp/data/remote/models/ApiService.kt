@@ -1,5 +1,3 @@
-// File: app/src/main/java/com/example/fitnessplusapp/data/remote/ApiService.kt
-
 package com.example.fitnessplusapp.data.remote
 
 import com.example.fitnessplusapp.data.remote.models.AuthRequest

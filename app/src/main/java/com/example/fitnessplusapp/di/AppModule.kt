@@ -3,11 +3,14 @@ package com.example.fitnessplusapp.di
 import android.content.Context
 import com.example.fitnessplusapp.data.local.UserDatabase
 import com.example.fitnessplusapp.data.local.WorkoutDatabase
+import com.example.fitnessplusapp.data.local.NutritionDatabase
 import com.example.fitnessplusapp.data.local.dao.UserDao
 import com.example.fitnessplusapp.data.local.dao.WorkoutDao
+import com.example.fitnessplusapp.data.local.dao.FoodDao
 import com.example.fitnessplusapp.data.preferences.UserPreferences
 import com.example.fitnessplusapp.data.remote.ApiService
 import com.example.fitnessplusapp.data.remote.AuthInterceptor
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +27,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    // --- Database ---
+    // провайдеры для баз данных
     
     @Provides
     @Singleton
@@ -42,14 +45,19 @@ object AppModule {
     @Provides
     fun provideUserDao(db: UserDatabase): UserDao = db.userDao()
 
-    // --- Preferences ---
-    
+    @Provides
+    @Singleton
+    fun provideNutritionDatabase(@ApplicationContext context: Context): NutritionDatabase =
+        NutritionDatabase.getDatabase(context)
+
+    @Provides
+    fun provideFoodDao(db: NutritionDatabase): FoodDao = db.foodDao()
     @Provides
     @Singleton
     fun provideUserPreferences(@ApplicationContext context: Context): UserPreferences =
         UserPreferences(context)
 
-    // --- Network ---
+    // настройка retrofit и okhttp
     
     @Provides
     @Singleton

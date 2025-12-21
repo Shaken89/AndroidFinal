@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -77,6 +78,11 @@ dependencies {
 
     // Datastore
     implementation(libs.androidx.datastore.preferences)
+
+    // Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
 
     // Hilt
     implementation(libs.hilt.android)

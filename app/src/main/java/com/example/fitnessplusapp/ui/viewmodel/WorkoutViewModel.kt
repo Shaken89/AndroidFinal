@@ -16,6 +16,7 @@ class WorkoutViewModel @Inject constructor(
 
     val allWorkouts: LiveData<List<WorkoutEntity>> = repository.allWorkouts
 
+    // операции с тренировками в корутинах
     fun insert(workout: WorkoutEntity) {
         viewModelScope.launch {
             repository.insert(workout)

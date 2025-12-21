@@ -1,5 +1,3 @@
-// File: app/src/main/java/com/example/fitnessplusapp/data/preferences/UserPreferences.kt
-
 package com.example.fitnessplusapp.data.preferences
 
 import android.content.Context

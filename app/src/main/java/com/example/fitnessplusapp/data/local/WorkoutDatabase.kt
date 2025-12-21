@@ -16,10 +16,9 @@ abstract class WorkoutDatabase : RoomDatabase() {
     companion object {
         @Volatile private var INSTANCE: WorkoutDatabase? = null
 
-        // Миграция с версии 1 на версию 2
+        // миграция добавляет доп поля
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
-                // Добавляем новые колонки
                 db.execSQL("ALTER TABLE workouts ADD COLUMN notes TEXT NOT NULL DEFAULT ''")
                 db.execSQL("ALTER TABLE workouts ADD COLUMN intensity TEXT NOT NULL DEFAULT 'Medium'")
                 db.execSQL("ALTER TABLE workouts ADD COLUMN sets INTEGER NOT NULL DEFAULT 0")
