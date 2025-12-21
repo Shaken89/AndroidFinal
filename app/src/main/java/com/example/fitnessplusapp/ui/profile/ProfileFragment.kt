@@ -1,45 +1,52 @@
-// File: app/src/main/java/com/example/fitnessplusapp/ui/profile/ProfileFragment.kt
 package com.example.fitnessplusapp.ui.profile
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.fitnessplusapp.R
-import com.example.fitnessplusapp.databinding.FragmentProfileBinding
+import com.example.fitnessplusapp.data.repository.AuthRepository
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
-
-    private val viewModel: ProfileViewModel by viewModels()
+    @Inject
+    lateinit var authRepository: AuthRepository
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentProfileBinding.bind(view)
 
-        observeViewModel()
-    }
+        val tvUserName = view.findViewById<TextView>(R.id.tv_user_name)
+        val tvUserEmail = view.findViewById<TextView>(R.id.tv_user_email)
+        val btnWorkouts = view.findViewById<Button>(R.id.btnWorkouts)
+        val btnNutrition = view.findViewById<Button>(R.id.btnNutrition)
+        val btnProgress = view.findViewById<Button>(R.id.btnProgress)
 
-    private fun observeViewModel() {
-        viewModel.userProfile.observe(viewLifecycleOwner) { user ->
-            // user может быть null, если в базе еще нет данных
-            if (user != null) {
-                binding.tvUserName.text = "Имя: ${user.name ?: "Не указано"}"
-                binding.tvUserEmail.text = "Email: ${user.email}"
-                // Обновите остальные TextView по аналогии
-            } else {
-                binding.tvUserName.text = "Загрузка данных профиля..."
-                binding.tvUserEmail.text = ""
-            }
+        // показываем текущего юзера
+        val currentUser = authRepository.currentUser
+        if (currentUser != null) {
+            tvUserName.text = "Добро пожаловать!"
+            tvUserEmail.text = currentUser
+        } else {
+            tvUserName.text = "Не авторизован"
+            tvUserEmail.text = "Войдите в систему"
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        // навигация по модулям
+        btnWorkouts.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_workoutListFragment)
+        }
+
+        btnNutrition.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_nutritionListFragment)
+        }
+
+        btnProgress.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_progressFragment)
+        }
     }
 }
