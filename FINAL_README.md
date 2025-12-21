@@ -1,61 +1,33 @@
-# 🏋️ Fitness+ Workout Module - Полная документация
+# Fitness+ App
 
-## 🚀 Быстрый старт
+Приложение для трекинга тренировок и питания
 
-### Запуск приложения:
-1. Откройте Android Studio
-2. `File → Open → d:\code\FitnessPlusApp`
-3. Дождитесь Gradle Sync (1-3 минуты)
-4. Нажмите Run (▶️) или Shift+F10
+## Запуск
 
-### Если приложение крашится:
+1. Открыть в Android Studio
+2. Запустить (▶️)
+
+Если падает:
 ```powershell
-# Очистить данные
 adb shell pm clear com.example.fitnessplusapp
-
-# Или пересобрать
-.\gradlew clean assembleDebug
-.\gradlew installDebug
 ```
 
----
+## Что реализовано
 
-## 📊 Оценочная таблица (40 баллов)
+### Модули
+- Workout - список тренировок, добавление/удаление
+- Nutrition - трекинг еды
+- Progress - статистика с графиками
+- Auth - вход/регистрация
 
-| Тема | Технология | Баллы | Статус |
-|------|------------|-------|--------|
-| **Networking** | Retrofit + OkHttp | 8 | ✅ Готово |
-| **Coroutines** | Kotlin Coroutines | 8 | ✅ Готово |
-| **Architecture** | MVVM Pattern | 8 | ✅ Готово |
-| **Offline Mode** | SharedPreferences (4) + Room (7) | 11 | ✅ Готово |
-| **Code Review** | Git (commits, branches, PRs) | 5 | ✅ Готово |
-| **ИТОГО** | | **40** | ✅ **100%** |
+### Технологии
+- Room БД
+- MVVM + Hilt
+- Kotlin Coroutines
+- Navigation Component
+- MPAndroidChart для графиков
 
----
-
-## 🎯 Реализованные функции
-
-### ✅ Базовый функционал (Endterm)
-- [x] Просмотр списка тренировок
-- [x] Добавление новых тренировок
-- [x] Удаление тренировок
-- [x] Room база данных
-- [x] MVVM архитектура
-- [x] Hilt Dependency Injection
-
-### 🚀 Расширенный функционал (Final)
-- [x] **Статистика с графиками** (LineChart, PieChart, BarChart)
-- [x] **Уведомления** (WorkManager для напоминаний)
-- [x] **Работа с файлами** (фото тренировок, Camera, Gallery)
-- [x] **Runtime Permissions** (Camera, Storage, Notifications)
-- [x] **Поиск и фильтрация** по категориям
-- [x] **Расширенные поля** (Notes, Intensity, Sets, Reps)
-- [x] **SharedPreferences** для настроек
-- [x] **Миграция БД** (версия 1 → 2)
-
----
-
-## 🏗️ Архитектура MVVM
+### Архитектура
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -85,97 +57,54 @@ adb shell pm clear com.example.fitnessplusapp
 ```
 app/src/main/java/com/example/fitnessplusapp/
 ├── data/
-│   ├── local/
-│   │   ├── entity/
-│   │   │   └── WorkoutEntity.kt          # Room Entity (11 полей)
-│   │   ├── dao/
-│   │   │   └── WorkoutDao.kt             # DAO с 15 методами
-│   │   └── WorkoutDatabase.kt            # Database + Migration
-│   ├── repository/
-│   │   └── WorkoutRepository.kt          # Repository Pattern
-│   ├── remote/
-│   │   ├── ApiService.kt                 # Retrofit API
-│   │   └── AuthInterceptor.kt            # OkHttp Interceptor
-│   ├── preferences/
-│   │   └── UserPreferences.kt            # DataStore
-│   └── workers/
-│       └── WorkoutReminderWorker.kt      # WorkManager
-├── ui/
-│   ├── workout/
-│   │   ├── WorkoutListFragment.kt        # Список тренировок
-│   │   ├── AddWorkoutFragment.kt         # Добавление (с фото)
-│   │   └── adapter/
-│   │       └── WorkoutAdapter.kt         # RecyclerView Adapter
-│   ├── statistics/
-│   │   ├── StatisticsFragment.kt         # 3 графика
-│   │   └── StatisticsViewModel.kt        # ViewModel
-│   └── viewmodel/
-│       └── WorkoutViewModel.kt           # Hilt ViewModel
-├── di/
-│   └── AppModule.kt                      # Hilt DI Config
-└── utils/
-    └── WorkoutNotificationHelper.kt      # Notification Helper
+ui/
+  workout/ - тренировки
+  nutrition/ - питание
+  progress/ - статистика
+  auth/ - авторизация
+data/
+  local/ - Room БД
+  repository/ - репозитории
+di/
+  AppModule.kt - Hilt настройка
 ```
 
----
-
-## 🗄️ Модель данных (Room)
+## БД структура
 
 ```kotlin
 @Entity(tableName = "workouts")
 data class WorkoutEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    
-    // Основные поля
-    val name: String,                      // Название
-    val category: String,                  // Категория
-    val duration: Int,                     // Длительность (мин)
-    val caloriesBurned: Int,              // Калории
-    val date: Long,                        // Дата
-    
-    // Расширенные поля (Final)
-    val notes: String = "",                // Заметки
-    val intensity: String = "Medium",      // Интенсивность
-    val sets: Int = 0,                     // Подходы
-    val reps: Int = 0,                     // Повторения
-    val imageUri: String? = null,          // Фото тренировки
-    val completed: Boolean = true          // Статус
+    val name: String,
+    val category: String,
+    val duration: Int,
+    val caloriesBurned: Int,
+    val date: Long,
+    val notes: String = "",
+    val intensity: String = "Medium",
+    val sets: Int = 0,
+    val reps: Int = 0,
+    val completed: Boolean = true
 )
 ```
 
-### Миграция БД (версия 1 → 2)
-✅ Добавлены 6 новых полей без потери данных
+## Зависимости
 
----
+```gradle
+// Room
+implementation("androidx.room:room-runtime:2.8.4")
+ksp("androidx.room:room-compiler:2.8.4")
 
-## 📡 Networking (Retrofit + OkHttp)
+// Hilt
+implementation("com.google.dagger:hilt-android:2.53")
+ksp("com.google.dagger:hilt-compiler:2.53")
 
-### Конфигурация
-```kotlin
-@Provides
-@Singleton
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
-    return Retrofit.Builder()
-        .baseUrl("https://api.example.com/")
-        .client(okHttpClient)  // OkHttp с логированием
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-}
+// Coroutines
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+
+// Charts
+implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 ```
-
-### OkHttp Interceptors
-- ✅ **AuthInterceptor** - авторизация
-- ✅ **LoggingInterceptor** - логирование запросов
-
----
-
-## 🔄 Kotlin Coroutines
-
-### Используется повсеместно:
-```kotlin
-fun insert(workout: WorkoutEntity) {
-    viewModelScope.launch {  // ViewModel Scope
-        repository.insert(workout)
     }
 }
 
