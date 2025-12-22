@@ -1,27 +1,33 @@
 package com.example.fitnessplusapp.data.repository
 
-import android.content.Context
+
 import android.content.SharedPreferences
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.example.fitnessplusapp.data.local.dao.UserDao
+import com.example.fitnessplusapp.data.local.entity.UserEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthRepository @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val userDao: UserDao,
+    private val prefs: SharedPreferences
 ) {
-    private val prefs: SharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
-    
-    // тут храним юзеров временно
-    private val users = mutableMapOf<String, String>()
-
     val currentUser: String?
         get() = prefs.getString("current_user", null)
 
-    fun loginUser(email: String, password: String): Result<String> {
-        return try {
-            val storedPassword = users[email]
-            if (storedPassword == password) {
+    private fun isValidEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    suspend fun loginUser(email: String, password: String): Result<String> = withContext(Dispatchers.IO) {
+        if (!isValidEmail(email)) {
+            return@withContext Result.failure(Exception("Некорректный email"))
+        }
+        try {
+            val user = userDao.getUserByEmail(email)
+            if (user != null && user.id == password) {
                 prefs.edit().putString("current_user", email).apply()
                 Result.success(email)
             } else {
@@ -32,12 +38,17 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    fun registerUser(email: String, password: String): Result<String> {
-        return try {
-            if (users.containsKey(email)) {
+    suspend fun registerUser(email: String, password: String): Result<String> = withContext(Dispatchers.IO) {
+        if (!isValidEmail(email)) {
+            return@withContext Result.failure(Exception("Некорректный email"))
+        }
+        try {
+            val existing = userDao.getUserByEmail(email)
+            if (existing != null) {
                 Result.failure(Exception("Пользователь уже существует"))
             } else {
-                users[email] = password
+                val user = UserEntity(id = password, email = email)
+                userDao.insertOrUpdateUser(user)
                 prefs.edit().putString("current_user", email).apply()
                 Result.success(email)
             }
