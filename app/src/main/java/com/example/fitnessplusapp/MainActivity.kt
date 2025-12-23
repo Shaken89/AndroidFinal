@@ -3,6 +3,7 @@ package com.example.fitnessplusapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +22,17 @@ class MainActivity : AppCompatActivity() {
             val navController = navHostFragment.navController
             val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
             bottomNav.setupWithNavController(navController)
+
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.loginFragment,
+                    R.id.registerFragment -> {
+                        bottomNav.visibility = View.GONE
+                    } else -> {
+                        bottomNav.visibility = View.VISIBLE
+                    }
+                }
+            }
 
             Log.d("MainActivity", "MainActivity created successfully - using Navigation Component")
         } catch (e: Exception) {
