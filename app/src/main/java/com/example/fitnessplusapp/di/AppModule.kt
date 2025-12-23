@@ -10,6 +10,7 @@ import com.example.fitnessplusapp.data.local.dao.FoodDao
 import com.example.fitnessplusapp.data.preferences.UserPreferences
 import com.example.fitnessplusapp.data.remote.ApiService
 import com.example.fitnessplusapp.data.remote.AuthInterceptor
+import com.example.fitnessplusapp.data.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -100,5 +101,17 @@ object AppModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(userDao: UserDao, prefs: android.content.SharedPreferences): AuthRepository {
+        return AuthRepository(userDao, prefs)
     }
 }

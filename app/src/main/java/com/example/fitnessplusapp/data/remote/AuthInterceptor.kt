@@ -13,14 +13,15 @@ class AuthInterceptor @Inject constructor(
 
     // добавляем токен к запросам
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = runBlocking { userPreferences.authToken.first() }
+        val requestBuilder = chain.request().newBuilder()
 
-        val request = chain.request().newBuilder()
+        // runBlocking может вызвать проблемы с производительностью, но для простоты оставим его здесь.
+        // В идеальном мире это должно быть обработано асинхронно.
+        val token = runBlocking { userPreferences.authToken.first() }
         token?.let {
-            request.addHeader("Authorization", "Bearer $it")
+            requestBuilder.addHeader("Authorization", "Bearer $it")
         }
 
-        return chain.proceed(request.build())
+        return chain.proceed(requestBuilder.build())
     }
 }
-    

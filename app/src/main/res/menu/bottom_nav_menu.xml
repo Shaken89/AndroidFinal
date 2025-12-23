@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nutritionListFragment"
+        android:title="Nutrition" />
+    <item
+        android:id="@+id/workoutListFragment"
+        android:title="Workouts" />
+    <item
+        android:id="@+id/progressFragment"
+        android:title="Progress Chart" />
+</menu>
